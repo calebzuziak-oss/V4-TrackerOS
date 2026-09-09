@@ -1,0 +1,55 @@
+V4-TrackerOS/
+├─ app/
+│  ├─ layout.tsx
+│  ├─ page.tsx
+│  ├─ globals.css
+│  ├─ hysa/
+│  │  └─ page.tsx
+│  ├─ brokerage/
+│  │  └─ page.tsx
+│  ├─ roth-ira/
+│  │  └─ page.tsx
+│  ├─ holdings/
+│  │  └─ page.tsx
+│  ├─ activity/
+│  │  └─ page.tsx
+│  ├─ goals/
+│  │  └─ page.tsx
+│  └─ settings/
+│     └─ page.tsx
+├─ components/
+│  ├─ ui/
+│  │  ├─ button.tsx
+│  │  ├─ card.tsx
+│  │  ├─ input.tsx
+│  │  └─ table.tsx
+│  ├─ layout/
+│  │  ├─ site-header.tsx
+│  │  └─ nav.tsx
+│  ├─ dashboard/
+│  │  ├─ net-worth-card.tsx
+│  │  ├─ account-cards.tsx
+│  │  └─ allocation-chart.tsx
+│  ├─ holdings/
+│  │  └─ holdings-table.tsx
+│  └─ accounts/
+│     ├─ hysa-summary.tsx
+│     ├─ portfolio-summary.tsx
+│     └─ contribution-tracker.tsx
+├─ lib/
+│  ├─ prisma.ts
+│  ├─ calculations.ts
+│  └─ utils.ts
+├─ prisma/
+│  └─ schema.prisma
+├─ types/
+│  └─ portfolio.ts
+├─ .eslintrc.json
+├─ .gitignore
+├─ .prettierrc
+├─ next.config.js
+├─ package.json
+├─ postcss.config.js
+├─ tailwind.config.ts
+├─ tsconfig.json
+└─ README.md
