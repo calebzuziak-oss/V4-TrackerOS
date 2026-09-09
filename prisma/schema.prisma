@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  accounts  Account[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  name         String
+  institution  String?
+  type         AccountType
+  currency     String   @default("USD")
+  currentApy   Float?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  transactions Transaction[]
+  holdings     Holding[]
+}
+
+enum AccountType {
+  HYSA
+  BROKERAGE
+  ROTH_IRA
+}
+
+model Security {
+  id           String   @id @default(cuid())
+  ticker       String   @unique
+  name         String
+  securityType SecurityType
+  assetClass   String?
+  sector       String?
+  expenseRatio Float?
+  dividendYield Float?
+  holdings     Holding[]
+  transactions Transaction[]
+}
+
+enum SecurityType {
+  STOCK
+  ETF
+  MUTUAL_FUND
+}
+
+model Transaction {
+  id         String   @id @default(cuid())
+  accountId  String
+  account    Account  @relation(fields: [accountId], references: [id])
+  securityId String?
+  security   Security? @relation(fields: [securityId], references: [id])
+  type       TransactionType
+  quantity   Float?
+  price      Float?
+  amount     Float
+  occurredAt DateTime
+  createdAt  DateTime @default(now())
+}
+
+enum TransactionType {
+  BUY
+  SELL
+  DIVIDEND
+  INTEREST
+  DEPOSIT
+  WITHDRAWAL
+  FEE
+}
+
+model Holding {
+  id        String   @id @default(cuid())
+  accountId String
+  account   Account  @relation(fields: [accountId], references: [id])
+  securityId String
+  security  Security @relation(fields: [securityId], references: [id])
+  quantity  Float
+  costBasis Float
+  updatedAt DateTime @updatedAt
+
+  @@unique([accountId, securityId])
+}
+
+model PriceSnapshot {
+  id         String   @id @default(cuid())
+  securityId String
+  security   Security @relation(fields: [securityId], references: [id])
+  price      Float
+  currency   String   @default("USD")
+  asOf       DateTime
+  createdAt  DateTime @default(now())
+
+  @@unique([securityId, asOf])
+}
